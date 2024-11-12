@@ -1,0 +1,38 @@
+/* Shop 왼쪽 마진  */
+.navbar-brand{margin-left:10px;}
+
+/* 본문 내용 */
+.content{
+    margin: 30px;
+}
+
+/* 컬럼 오류시 빨간색으로 보여 주기  */
+.fieldError{
+    color:red;
+    font-size:1.0rem;
+}
+
+/*   */
+.nav-link{color:Gainsboro;}
+.nav-link{color:HoneyDew;}
+
+/* 하단 푸터는 항상 아래에 고정  */
+.footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+}
+
+/* html 문서 내의 폼 양식  */
+div.form-group{
+    margin-bottom:10px;
+}
+
+/* 폼 양식 내의 label 태그  */
+label{
+    font-size:1.1rem;
+}

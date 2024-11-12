@@ -1,0 +1,111 @@
+package com.shopping.controller;
+
+import com.shopping.service.ProductService;
+import com.shopping.view.ProductView;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+
+@Controller
+@RequiredArgsConstructor
+public class ProductController {
+//    @GetMapping(value = "/admin/product/insert")
+//    public String doGetInsert(){
+//        return "product/prInsertForm" ;
+//
+//    }
+
+
+    @GetMapping(value = "/admin/product/insert")
+    public String doGetInsert(Model model){
+        model.addAttribute("productView",new ProductView());
+        return "product/prInsertForm" ;
+
+    }
+
+    private final ProductService ps;
+
+    @PostMapping(value = "/admin/product/insert")
+    public String doPostInsert(@Valid ProductView pv, BindingResult br, Model model,
+     @RequestParam("img01")MultipartFile img01){
+        // pv : 사용자가 기입한 정보를 담고 있는 command 객체입니다.
+
+        if(br.hasErrors()){ // 유효성 검사에 문제가 있음
+            return "/product/prInsertForm" ;
+        }
+
+        // isEmpty() : 사용자가 이미지 파일을 선택하지 않았거나, 전송된 파일이 비어 있을 때 참입니다.
+        if(img01.isEmpty() && pv.getId() == null){
+            model.addAttribute("errorMessage", "첫 번째 이미지는 필수 입력 값입니다.");
+            return "/product/prInsertForm" ;
+        }
+
+        try{
+            // 서비스 객체에게 command 객체의 저장을 부탁합니다.
+            ps.saveProduct(pv);
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+            model.addAttribute("errorMessage", "예외가 발생하였습니다.");
+            return "/product/prInsertForm" ;
+        }
+
+        return "redirect:/" ; // 메인 페이지로 이동
+
+    }
+
+    // 상품 수정 페이지로 이동하기 위한 코드를 작성합니다.
+    @GetMapping(value = "/admin/product/update/{productId}")
+    public String doGetUpdate(@PathVariable("productId") Long productId, Model model){
+        ProductView pv = ps.getProductDetail(productId);
+
+        if(pv == null){
+            String message = "상품 번호 " + productId + "는(은) 존재하지 않습니다.";
+            System.out.println(message);
+            model.addAttribute("errorMessage",message);
+            return "redirect:/" ; // go to main page
+
+        }else {
+            model.addAttribute("productView",pv);
+            return "product/prUpdateForm" ;
+        }
+    }
+
+
+    // 상품 수정 페이지에서 '수정' 버튼을 클릭합니다.
+    @PostMapping(value = "/admin/product/update")
+    public String doPostUpdate(@Valid ProductView pv, BindingResult br, Model model,
+                               @RequestParam("img01")MultipartFile img01){
+        final String whenError = "/product/prUpdateForm";
+
+        // pv : 사용자가 수정한 정보를 담고 있는 command 객체입니다.
+        if(br.hasErrors()){ // 유효성 검사에 문제가 있음
+            return whenError ;
+        }
+
+        // isEmpty() : 사용자가 이미지 파일을 선택하지 않았거나, 전송된 파일이 비어 있을 때 참입니다.
+        if(img01.isEmpty() && pv.getImg01() == null){
+            model.addAttribute("errorMessage", "첫 번째 이미지는 필수 입력 값입니다.");
+            return whenError ;
+        }
+
+        try{
+            // 서비스 객체에게 command 객체의 저장을 부탁합니다.
+            ps.updateProduct(pv);
+            return "redirect:/" ; // 메인 페이지로 이동
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+            model.addAttribute("errorMessage", "상품 수정에 문제가 발생하였습니다.");
+            return whenError ;
+        }
+    }
+}

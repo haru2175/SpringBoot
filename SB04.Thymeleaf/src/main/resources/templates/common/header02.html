@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- 사용자 정의 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var loginfo = [[${loginfo}]] ;
+            if(loginfo != null){
+                alert(loginfo) ;
+            }
+            var errorMessage = [[${errorMessage}]] ;
+            if(errorMessage != null){
+                alert(errorMessage) ;
+            }
+        });
+    </script>
+</th:block>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<div th:fragment="asdf">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">Shop</a>
+
+        <li class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">상품 등록</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">상품 관리</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">게시물 보기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">장바구니</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">주문 내역</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">로그 아웃</a>
+                </li>
+            </ul>
+        </li>
+        <form class="form-inline d-flex ml-auto justify-content-end" th:action="@{/}" method="get">
+            <input name="searchQuery" class="form-control mr-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+            &nbsp;&nbsp;&nbsp;
+            <button class="btn btn-outline-success" type="submit">Search</button>
+            &nbsp;
+        </form>
+    </nav>
+</div>
+</html>
