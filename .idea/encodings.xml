@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/SB00.lnitalizer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB01.For_React/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB02.Di_Aop/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB03.Jpa/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB04.Thymeleaf/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB05.Security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB06.Association_Mapping/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/SB07.Product/src/main/java" charset="UTF-8" />
+  </component>
+</project>
