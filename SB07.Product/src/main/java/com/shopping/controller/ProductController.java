@@ -1,9 +1,15 @@
 package com.shopping.controller;
 
+import com.shopping.entity.Product;
 import com.shopping.service.ProductService;
 import com.shopping.view.ProductView;
+import com.shopping.view.SearchView;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -108,4 +115,41 @@ public class ProductController {
             return whenError ;
         }
     }
+
+    // 상품 목록 관리자 페이지 시작
+    // import org.springframework.beans.factory.annotation.Value;
+    @Value("${pageSize}")
+    private int pageSize ; // 1개의 페이지에 보여주는 행 갯수
+
+    @Value("${pageCount}")
+    private int pageCount ; // 하단에 보여지는 최대 페이지 번호 개수
+
+    // import java.util.Optional;
+    // 상품 목록 관리자 페이지를 위한 컨트롤러 메소드입니다.
+    // 2가지 이상의 요청에 응대하려면 중괄호 {}를 사용하면 됩니다.
+    // Optional 클래스는 자바의 NPE 문제를 해결하기 위하여 제공해주는 클래스입니다.
+    // NPE : Null Pointer Exception
+    @GetMapping(value = {"/admin/product/list","/admin/product/list/{page}"})
+    public String productList(SearchView sv, @PathVariable("page") Optional<Integer> page,Model model){
+        System.out.println("SearchView Information : " + sv);
+
+        // isPresent => 값이 들어있는지 없는지 확인하는것.
+        Integer pageNumber = page.isPresent() ? page.get() : 0;
+        System.out.println("Current Page Number : " + pageNumber);
+
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        Page<Product> products = ps.getAdminProductPage(sv, pageable);
+        long totalCount = products.getTotalElements(); // getTotalElements > 페이징클래스
+        System.out.println("Total Data Count : " + totalCount);
+
+        model.addAttribute("products",products); // html 문서에서 보여줄 목록
+        model.addAttribute("pageCount",pageCount); // 하단에 보여지는 최대 페이지 번호 개수
+        model.addAttribute("totalCount","총" + totalCount + "건"); // 전체 데이터 개수
+        model.addAttribute("searchView",sv); // 필드 검색 조건
+
+        return "product/prList";
+    }
+
+    // 상품 목록 관리자 페이지 끝
+
 }

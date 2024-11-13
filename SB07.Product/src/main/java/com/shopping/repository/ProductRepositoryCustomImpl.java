@@ -7,6 +7,8 @@ import com.shopping.constant.Category;
 import com.shopping.constant.ProductStatus;
 import com.shopping.entity.Product;
 import com.shopping.entity.QProduct;
+import com.shopping.view.MainView;
+import com.shopping.view.QMainView;
 import com.shopping.view.SearchView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -100,5 +102,37 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
         }
 
         return QProduct.product.regDate.after(dateTime) ;
+    }
+
+    @Override
+    public Page<MainView> getMainProductPage(SearchView sv, Pageable pageable) {
+        QProduct product = QProduct.product ;
+
+        QueryResults<MainView> results =
+                this.queryFactory
+                        .select(
+                            new QMainView(
+                                    product.id,
+                                    product.name,
+                                    product.description,
+                                    product.image01,
+                                    product.price
+                        ))
+                        .from(product)
+                        .where(likeCondition(sv.getSearchMode()))
+                        .orderBy(product.id.desc())
+                        .offset(pageable.getOffset())
+                        .limit(pageable.getPageSize())
+                        .fetchResults();
+
+
+        List<MainView> content = results.getResults();
+        long total = 0L;
+        return new PageImpl<>(content,pageable,total);
+    }
+
+    private BooleanExpression likeCondition(String searchMode) {
+        // 검색 키워드가 널이 아니면 like 연산을 수행합니다.
+        return StringUtils.isEmpty(searchMode) ? null : QProduct.product.name.like("%" + searchMode + "%");
     }
 }
