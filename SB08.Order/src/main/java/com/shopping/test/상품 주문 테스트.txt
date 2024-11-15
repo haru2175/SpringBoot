@@ -1,0 +1,19 @@
+-- 데이터 삭제
+delete from order_products;
+delete from orders;
+commit;
+
+-- 상품의 이전 재고 확인
+select name, price, stock from products where product_id = 47 ;
+
+-- 주문 동작(IntelliJ에서 실행) : bluesky로 로그인
+
+-- 주문 내역 조회
+select *
+from (orders o inner join order_products op
+on o.order_id = op.order_id)
+inner join products p
+on op.product_id = p.product_id;
+
+-- 상품의 변경된 재고 확인
+select name, price, stock from products where product_id = 47 ;
