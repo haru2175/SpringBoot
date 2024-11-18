@@ -67,7 +67,7 @@ public class OrderController {
     @Value("${pageCount}") // beans 임포트
     private int pageCount;
 
-    @GetMapping(value = {"/orders","/orders{page}"})
+    @GetMapping(value = {"/orders","/orders/{page}"})
     public String orderHistory(@PathVariable("page") Optional<Integer> page, Model model,Principal principal){
         // isPresent = Null 체크
         int pageNumber = page.isPresent() ? page.get() : 0 ;
