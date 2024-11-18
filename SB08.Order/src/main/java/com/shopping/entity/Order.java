@@ -70,4 +70,14 @@ public class Order extends BaseEntity{
         return order ;
     }
     // 주문 기능 구현하기 끝
+
+    // 주문 내역 취소하기 시작
+    public void cancelOrder(){
+        this.orderStatus = OrderStatus.CANCEL;
+
+        for(OrderProduct op : this.orderProducts){
+            op.cancel(); // 각 품목들에 대하여 재고 수량을 늘립니다.
+        }
+    }
+    // 주문 내역 취소하기 끝
 }

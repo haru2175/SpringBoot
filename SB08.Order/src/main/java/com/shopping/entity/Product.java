@@ -77,4 +77,12 @@ public class Product extends BaseEntity {
         // 주문 성공 이후 남은 재고 수량을 갱신합니다.
         this.stock = resStock ;
     }
+
+    // 주문 내역 취소하기 시작
+    // 주문 내역을 취소하는 경우 상품의 재고 수량을 늘어 나야 합니다.
+    public void addStock(int vsotck){
+        this.stock += vsotck;
+    }
+
+    // 주문 내역 취소하기 끝
 }

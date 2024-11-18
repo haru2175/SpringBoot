@@ -1,5 +1,6 @@
 package com.shopping.test;
 
+import com.shopping.common.GenerateData;
 import com.shopping.entity.Member;
 import com.shopping.entity.Order;
 import com.shopping.entity.Product;
@@ -72,4 +73,33 @@ public class OrderServiceTest {
         member.setEmail("sample3@naver.com");
         return mr.save(member) ;
     }
+
+    // 주문 취소하기 시작
+    @Test
+    @DisplayName("주문 취소하기 테스트")
+    public void cancelOrder(){
+        Member member = GenerateData.createMember() ; // 회원 객체를 구합니다.
+        mr.save(member) ;
+
+        String email = member.getEmail() ; // 메일 주소 가져오고
+
+        Product product = GenerateData.createProduct(true, 0);
+        pr.save(product) ; // 상품을 가져오고
+
+        // 내가 주문했던 정보
+        OrderView ov = new OrderView();
+        ov.setCount(10);
+        ov.setProductId(product.getId());
+
+        Long orderId = os.order(ov, email); // 주문 하기
+        System.out.println("주문 아이디 : " + orderId);
+
+        Order order = or.findById(orderId).orElseThrow(EntityNotFoundException::new);
+
+        order.cancelOrder(); // 주문 취소하기
+
+        System.out.println("주문 아이디(from Database)) : " + order.getId());
+        System.out.println("주문 상태 : " + order.getOrderStatus());
+    }
+    // 주문 취소하기 끝
 }
