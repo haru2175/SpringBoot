@@ -18,7 +18,7 @@ import javax.persistence.EntityNotFoundException;
 
 @SpringBootTest
 // @Transactional  // import org.springframework.transaction.annotation.Transactional;
-//@Transactional 이걸쓰면 테스트하고 롤백된다.
+// @Transactional 이걸쓰면 테스트하고 롤백된다.
 public class CartServiceTest {
     // CartServiceTest01 장바구니에 담기 시작
     @Autowired
