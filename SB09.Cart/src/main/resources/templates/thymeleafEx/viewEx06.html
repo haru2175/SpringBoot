@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>타임 리프 HyperLink 처리 예시</h1>
+    <div>
+        <a th:href="@{/thymeleaf/ex01}">예제 01번으로 이동하기</a>
+        <br/>
+    </div>
+    <div>
+        <a th:href="@{https://www.thymeleaf.org}">타임 리프 홈</a>
+        <br/>
+    </div>
+    <div>
+        <a th:href="@{/thymeleaf/ex07(param1='가나다', param2='abc')}">예제 07번(파라미터 전달)</a>
+        <br/>
+    </div>
+</body>
+
+</html>
