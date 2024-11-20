@@ -2,16 +2,16 @@ package com.shopping.controller;
 
 
 import com.shopping.service.CartService;
-import com.shopping.view.CartDetailView;
 import com.shopping.view.CartProductView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -48,58 +48,4 @@ public class CartController {
     }
 
     // 장바구니에 담기 끝
-
-    // 장바구니 목록 조회하기 시작
-    // 메인 화면에서 `장바구니` 링크를 클릭하였습니다.
-    @GetMapping(value = "/cart") // declaration in header.html file
-    public String cartHistory(Model model,Principal principal){
-        String email = principal.getName();
-        List<CartDetailView> cdvList = cs.getCartList(email);
-        model.addAttribute("cartProducts",cdvList);
-
-        return "/cart/cartList";
-    }
-    // 장바구니 목록 조회하기 끝
-
-    // 장바구니 목록 조회 화면에서 수량 변경 시작
-    // @PatchMapping은 HTTP PATCH 메소드 요청을 처리하기 위하여 사용되는데, 일반적으로 전체 보다는 부분적 업데이트를 수행하고자 할때 많이 사용합니다.
-    @PatchMapping(value = "/cartProduct/{cartProductId}")
-    public @ResponseBody ResponseEntity updateCartProduct(@PathVariable("cartProductId") Long cartProductId, int count , Principal principal){ // 카트 목록 페이지에서 특정 상품의 수량을 변경하였습니다.
-        System.out.println("상품 번호 : " + cartProductId);
-        System.out.println("변경할 수량 : " + count);
-        String message ;
-
-        if(count <= 0){
-            message = "수량은 최소 1개 이상이어야 합니다.";
-            return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST);
-        }
-
-        String email = principal.getName() ;
-
-        if(cs.validateCartProduct(cartProductId, email) == false){
-            message = "수정 권한이 없습니다.";
-            return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST);
-        }
-
-        cs.updateCartProductCount(cartProductId, count); // 장바구니의 수량 변경하기
-        return new ResponseEntity<Long>(cartProductId, HttpStatus.OK);
-
-    }
-    // 장바구니 목록 조회 화면에서 수량 변경 끝
-
-    // 장바구니 목록 조회 화면에서 상품 삭제 시작
-    @DeleteMapping(value = "/cartProduct/{cartProductId}")
-    public @ResponseBody ResponseEntity deleteCartProduct(@PathVariable("cartProductId") Long cartProductId, Principal principal){
-        String email = principal.getName();
-
-        if(!cs.validateCartProduct(cartProductId, email)){
-            String message = "삭제 권한이 없습니다.";
-            return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST);
-
-        }else {
-            cs.deleteCartProduct(cartProductId);
-            return new ResponseEntity<Long>(cartProductId, HttpStatus.OK);
-        }
-    }
-    // 장바구니 목록 조회 화면에서 상품 삭제 끝
 }

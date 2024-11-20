@@ -48,37 +48,7 @@
 
             var token = $("meta[name='_csrf']").attr("content") ;
             var header = $("meta[name='_csrf_header']").attr("content") ;
-
-            $.ajax({
-                url:myurl,
-                type:'POST',
-                contentType:'application/json',
-                data:param,
-                beforeSend:function(xhr){
-                    /* 데이터를 전송하기 전에 csrf 토큰을 Header에 먼저 전송하도록 합니다. */
-                    //console.log(token + '/' + header);
-                    //xhr.setRequestHeader(header, token) ;
-                },
-                cache:false,
-                success:function(response, status){
-                    alert('주문이 완료 되었습니다.');
-                    location.href = '/' ;
-                },
-                error:function(xhr, status, error){
-                    console.log('failure');
-                    console.log('xhr.responseText : ' + xhr.responseText);
-                    console.log('status : ' + status);
-                    console.log('error : ' + error);
-
-                    if(xhr.status == '401'){
-                        alert('로그인 이후 이용해 주시길 바랍니다.');
-                        location.href = '/member/login' ;
-                    }
-                }
-            });
-        }
-
-        /* 장바구니 기능 구현하기 */
+            /* 장바구니 기능 구현하기 */
         function addCart(){
             var count = Number($('#count').val()) ;
             if(count == 0){
@@ -114,6 +84,85 @@
                     var name = $('#name').val();
                     var message = "'" + name + "' 상품 '" + count + "'개를 장바구니에 담았습니다.";
                     alert(message);
+                    location.href = '/' ;
+                },
+                error:function(xhr, status, error){
+                    console.log('failure');
+                    console.log('xhr.responseText : ' + xhr.responseText);
+                    console.log('status : ' + status);
+                    console.log('error : ' + error);
+
+                    if(xhr.status == '401'){
+                        alert('로그인 이후 이용해 주시길 바랍니다.');
+                        location.href = '/member/login' ;
+                    }
+                }
+            });
+        }
+            /* 장바구니 기능 구현하기 */
+            function addCart(){
+                var count = Number($('#count').val()) ;
+                if(count == 0){
+                    alert('수량은 최소 1개 이상이어야 합니다.');
+                    return false ;
+                }
+
+                var myurl = '/cart';
+
+                /* 관련 클래스 : CartProductView */
+                var paramData = {
+                    productId:$('#productId').val(),
+                    count:count
+                };
+
+                /* 자바 스크립트 객체를 문자열 형식으로 변경합니다. */
+                var param = JSON.stringify(paramData);
+
+                var token = $("meta[name='_csrf']").attr("content") ;
+                var header = $("meta[name='_csrf_header']").attr("content") ;
+
+                $.ajax({
+                    url:myurl,
+                    type:'POST',
+                    contentType:'application/json',
+                    data:param,
+                    beforeSend:function(xhr){
+                        //console.log(token + '/' + header);
+                        //xhr.setRequestHeader(header, token) ;
+                    },
+                    cache:false,
+                    success:function(response, status){
+                        var name = $('#name').val();
+                        var message = "'" + name + "' 상품 '" + count + "'개를 장바구니에 담았습니다.";
+                        alert(message);
+                        location.href = '/' ;
+                    },
+                    error:function(xhr, status, error){
+                        console.log('failure');
+                        console.log('xhr.responseText : ' + xhr.responseText);
+                        console.log('status : ' + status);
+                        console.log('error : ' + error);
+
+                        if(xhr.status == '401'){
+                            alert('로그인 이후 이용해 주시길 바랍니다.');
+                            location.href = '/member/login' ;
+                        }
+                    }
+                });
+            }
+            $.ajax({
+                url:myurl,
+                type:'POST',
+                contentType:'application/json',
+                data:param,
+                beforeSend:function(xhr){
+                    /* 데이터를 전송하기 전에 csrf 토큰을 Header에 먼저 전송하도록 합니다. */
+                    //console.log(token + '/' + header);
+                    //xhr.setRequestHeader(header, token) ;
+                },
+                cache:false,
+                success:function(response, status){
+                    alert('주문이 완료 되었습니다.');
                     location.href = '/' ;
                 },
                 error:function(xhr, status, error){
@@ -184,7 +233,7 @@
             <span class="badge badge-primary mgb-15" th:text="${product.productStatus.getStatus()}">
             </span>
             <!-- 상품 이름 -->
-            <input type="hidden" name="name" id="name" th:value="${product.name}" />
+            <input type="hidden" name="name" id="name" th:value="${product.name}"/>
             <div class="h4" th:text="${product.name}"></div>
 
             <hr>
@@ -199,8 +248,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">수량</span>
                     </div>
-                    <input type="number" name="count" id="count" class="form-control" value="0" min="0"
-                           th:attr="disabled=${#authorization.expression('isAnonymous()') ? 'disabled' : null}">
+                    <input type="number" name="count" id="count" class="form-control" value="0" min="0">
                 </div>
             </div>
 
@@ -239,12 +287,12 @@
     </div>
     <!-- 점보 트론 끝-->
     <!-- 세부 이미지 시작 -->
-    <div class="text-center" >
+    <div class="text-center">
         <img th:if="${not #strings.isEmpty(product.image01)}" th:src="${product.image01}"
              class="rounded mgb-15" width="600" height="450" th:alt="${product.name}">
     </div>
     <br/>
-    <div class="text-center" >
+    <div class="text-center">
         <!--/* 이미지가 없는 경우 /images/image/null 형식으로 넘어 옵니다. 문자열 /null을 포함하고 있는 지 체크합니다. */-->
         <div th:if="${not #strings.contains(product.image02,'/null')}">
             <img th:if="${not #strings.isEmpty(product.image02)}" th:src="${product.image02}"
@@ -252,7 +300,7 @@
         </div>
     </div>
     <br/>
-    <div class="text-center" >
+    <div class="text-center">
         <div th:if="${not #strings.contains(product.image03,'/null')}">
             <img th:if="${not #strings.isEmpty(product.image03)}" th:src="${product.image03}"
                  class="rounded mgb-15" width="600" height="450" th:alt="${product.name}">
