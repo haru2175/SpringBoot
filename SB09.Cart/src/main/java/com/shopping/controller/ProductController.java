@@ -149,7 +149,6 @@ public class ProductController {
         // pv : 상품 상세 페이지에서 보여주고자 하는 데이터 정보(Bean 객체)
         ProductView pv = ps.getProductDetail(productId);
         model.addAttribute("product", pv);
-
         return "/product/prDetail";
     }
     // 상품 상세 페이지 끝

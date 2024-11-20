@@ -42,4 +42,10 @@ public class CartProduct extends BaseEntity{
     }
     // CartProduct02 장바구니에 담기 끝
 
+    // 장바구니 목록 조회 페이지 수량 변경 시작
+    public void updateCount(int count){
+        this.count = count ; // 수량 변경(overwrite)
+    }
+    // 장바구니 목록 조회 페이지 수량 변경 끝
+
 }
