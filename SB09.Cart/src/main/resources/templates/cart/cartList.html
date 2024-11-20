@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/mylayout}">
+
+    <!-- 사용자 정의 스크립트 추가 -->
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            $(document).ready(function(){
+                /* 체크 박스의 상태 변경이 일어 나면 전체 요금을 다시 갱신해야 합니다. */
+                $('input[name=productCheckBox]').change(function(){
+                    refreshOrderTotalPrice();
+                });
+            });
+
+            function AddComma(num){ /* 3자리마다 콤마 유형 넣기 */
+                var regexp = /\B(?=(\d{3})+(?!\d))/g;
+                return num.toString().replace(regexp, ',');
+            }
+
+            /* 사용자가 수량을 변경했습니다. */
+            function changeCount(obj){
+                var cartProductId = obj.id.split('_')[1]; // 카트 상품 아이디
+                var price = $('#price_' + cartProductId).data('price') ; // span 태그의 data-price 속성에 가격 정보가 들어 있습니다.
+                var count = obj.value ; // value 속성에 개수 정보가 들어 있습니다.
+                var totalPrice = price * count ;
+
+                /* 상품 금액을 갱신합니다. */
+                $('#totalPrice_' + cartProductId).html(AddComma(totalPrice));
+
+                refreshOrderTotalPrice();
+
+                /* 수량 변경시 데이터 베이스에도 반영해주어야 합니다.*/
+                updateCartProductCount(cartProductId,count);
+            }
+
+            /* 총 주문 금액을 다시 계산합니다. */
+            function refreshOrderTotalPrice(){
+                var orderTotalPrice = 0 ;
+
+                /* 체크 박스의 상태가 on인 항목들에 대하여 전체 금액을 다시 구합니다. */
+                $('input[name=productCheckBox]:checked').each(function(){
+                    var cartProductId = $(this).val();
+                    var price = $('#price_' + cartProductId).attr('data-price') ;
+                    var count = $('#count_' + cartProductId).val() ;
+                    orderTotalPrice += price * count ;
+                });
+
+                $('#orderTotalPrice').html(AddComma(orderTotalPrice) + '원');
+            }
+
+            /* 모든 체크 박스의 상태를 on/off 시킵니다. */
+            function checkAll(){
+                if($('#checkAll').prop('checked')){
+                    $('input[name=productCheckBox]').prop('checked', true);
+                }else{
+                    $('input[name=productCheckBox]').prop('checked', false);
+                }
+                refreshOrderTotalPrice();
+            }
+
+            /* ajax를 사용하여 상품 수량을 변경하도록 합니다. */
+            function updateCartProductCount(cartProductId, count){
+
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+
+                var myurl = '/cartProduct/' + cartProductId + '?count=' + count ;
+
+                $.ajax({
+                    url:myurl,
+                    type:'PATCH',
+                    contentType:'application/json',
+                    beforeSend:function(xhr){
+                        //console.log(header + '/' + token);
+                        //xhr.setRequestHeader(header, token);
+                    },
+                    dataType:'json',
+                    cache:false,
+                    success:function(result, status){
+                        console.log('bean count update success');
+                    },
+                    error:function(xhr, status, error){
+                        console.log('오류가 발생하였습니다.');
+                        console.log('xhr.responseText : ' + xhr.responseText);
+                        console.log('status : ' + status);
+                        console.log('error : ' + error);
+
+                        if(xhr.status=='401'){
+                            alert('로그인 이후에 이용해 주세요.');
+                            location.href = '/member/login' ;
+                        }
+                    },
+                });
+            }
+
+            /* ajax를 사용하여 특정 상품을 삭제합니다. */
+            function deleteCartProduct(obj){
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+
+                var cartProductId = obj.dataset.id ;
+                var myurl = '/cartProduct/' + cartProductId  ;
+
+                $.ajax({
+                    url:myurl,
+                    type:'DELETE',
+                    contentType:'application/json',
+                    beforeSend:function(xhr){
+                        //console.log(header + '/' + token);
+                        //xhr.setRequestHeader(header, token);
+                    },
+                    dataType:'json',
+                    cache:false,
+                    success:function(result, status){
+                        console.log('bean delete success');
+                        location.href = '/cart' ;
+                    },
+                    error:function(xhr, status, error){
+                        console.log('오류가 발생하였습니다.');
+                        console.log('xhr.responseText : ' + xhr.responseText);
+                        console.log('status : ' + status);
+                        console.log('error : ' + error);
+
+                        if(xhr.status=='401'){
+                            alert('로그인 이후에 이용해 주세요.');
+                            location.href = '/member/login' ;
+                        }
+                    },
+                });
+            }
+        </script>
+    </th:block>
+
+    <!-- 사용자 CSS 추가 -->
+    <th:block layout:fragment="css">
+        <style>
+            /* 열의 비율은 15%, 70%, 15%입니다. */
+            th:first-child {
+                width: 15%;
+            }
+            th:nth-child(2) {
+                width: 70%;
+            }
+            th:nth-child(3) {
+                width: 15%;
+            }
+            .content-margin{ /* 외부 컨테이너 박스 */
+                margin-right:25%;
+                margin-left:25%;
+                margin-top:2%;
+                margin-bottom:100px;
+            }
+            .repImageDiv{ /* 대표 이미지를 담고 있는 div */
+                margin-right:15px;
+                margin-left:15px;
+                height:auto;
+            }
+            .repImage{ /* 대표 이미지 */
+                height:100px;
+                width:100px;
+            }
+            .largeFontSize{ /* 큰 글씨 영역(상품 이름) */
+                font-size:25px;
+            }
+            .mediumFontSize{
+                font-size:18px;
+            }
+        </style>
+    </th:block>
+
+    <div class="content" layout:fragment="content">
+        <h2>장바구니 목록</h2>
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="checkAll" onclick="checkAll();"/> 전체 선택
+                    </th>
+                    <th>상품 정보</th>
+                    <th>상품 금액</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean : ${cartProducts}">
+                    <td class="text-center align-middle">
+                        <!--/* 체크 박스의 value 속성에 상품 번호가 저장되어 있습니다. */-->
+                        <input type="checkbox" name="productCheckBox" th:value="${bean.cartProductId}"/>
+                    </td>
+                    <td class="d-flex">
+                        <div class="align-self-center repImageDiv">
+                            <!--/* 대표 이미지 영역 */-->
+                            <img class="img-thumbnail repImage" th:src="${bean.image01}" th:alt="${bean.name}"/>
+                        </div>
+                        <div class="align-self-center">
+                            <!--/* 우측 영역 */-->
+                            <span th:text="${bean.name}" class="font-weight-bold largeFontSize">이름</span>
+                            <div class="font-weight-light mediumFontSize">
+                            <span class="input-group">
+                                <!--/* id, data-price 속성은 javascript에서 참조 가능하도록 unique하게 명명하였습니다. */-->
+                                <span
+                                        th:id="'price_' + ${bean.cartProductId}"
+                                        th:data-price="${bean.price}"
+                                        th:text="${#numbers.formatInteger(bean.price, 0, 'COMMA')} + '원'"
+                                        class="align-self-center">100원</span>
+                                &nbsp;
+                                <input type="number" name="count" min="1"
+                                       th:id="'count_' + ${bean.cartProductId}"
+                                       th:value="${bean.count}"
+                                       class="form-control"
+                                       onchange="changeCount(this);"/>
+
+                                <button type="button" class="close">
+                                    <span th:data-id="${bean.cartProductId}"
+                                        onclick="deleteCartProduct(this);">
+                                        &nbsp;&times;
+                                    </span>
+                                </button>
+                            </span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center align-middle mediumFontSize">
+                        <!--/* 금액 = 단가 * 수량 */-->
+                        <!--/* id 속성은 "totalPrice_상품번호" 형식으로 작성하고, 차후 JavaScript에서 사용될 예정입니다. */-->
+                        <span name="totalPrice" th:id="'totalPrice_' + ${bean.cartProductId}"
+                              th:text="${#numbers.formatInteger(bean.price*bean.count, 0, 'COMMA')}"/> 원
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2 class="text-center">
+                총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
+            </h2>
+
+            <h2 class="text-center">
+                <button type="button"
+                        class="btn btn-primary btn-lg">
+                    주문하기
+                </button>
+            </h2>
+        </div>
+    </div>
+</html>
