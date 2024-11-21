@@ -43,5 +43,4 @@ public class MemberService implements UserDetailsService {
             throw new IllegalStateException(message) ;
         }
     }
-
 }
