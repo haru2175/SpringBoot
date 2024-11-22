@@ -111,4 +111,30 @@ public class OrderService {
     }
 
     // 주문 내역 취소하기 끝
+
+    // 장바구니 목록 중에서 몇 개만 주문하기 시작
+    // 장바구니 목록 중에서 체크한 상품 데이터들을 전달 받아서 주문을 하는 로직입니다.
+    public Long orderInCartList(List<OrderView> orderViewList,String email){
+        // orderViewList : 상품의 id와 주문 수량을 저장하고 있는 객체들의 모음입니다.
+        // email : Security 인증을 통하여 흭득한 사용자 이메일 정보입니다.
+        Member member = mr.findByEmail(email);
+
+        // orderProductList : 이번에 주문하고자 하는 상품들의 리스트입니다.
+        List<OrderProduct> orderProductList = new ArrayList<>();
+
+        for(OrderView ov : orderViewList){
+            Long productId = ov.getProductId();
+            Product product = pr.findById(productId).orElseThrow(EntityNotFoundException::new);
+            int count = ov.getCount();
+            OrderProduct op = OrderProduct.createOrderProduct(product,count);
+            orderProductList.add(op);
+        }
+
+        // order : 주문하고자 하는 객체 정보입니다.
+        Order order = Order.createOrder(member,orderProductList);
+        or.save(order); // 데이터 베이스에 저장
+        return order.getId();
+
+    }
+    // 장바구니 목록 중에서 몇 개만 주문하기 끝
 }

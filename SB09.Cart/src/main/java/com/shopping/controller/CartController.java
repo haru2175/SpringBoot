@@ -3,6 +3,7 @@ package com.shopping.controller;
 
 import com.shopping.service.CartService;
 import com.shopping.view.CartDetailView;
+import com.shopping.view.CartOrderView;
 import com.shopping.view.CartProductView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -102,4 +103,49 @@ public class CartController {
         }
     }
     // 장바구니 목록 조회 화면에서 상품 삭제 끝
+
+    // 장바구니 품목들 중 몇 개 주문 하기 시작
+    @PostMapping(value = "/cart/orders")
+    public @ResponseBody ResponseEntity orderCartProduct(@RequestBody CartOrderView cov, Principal principal) {
+        List<CartOrderView> cartOrderViewList = cov.getCartOrderViewList();
+
+        String message ;
+
+        if(cartOrderViewList==null || cartOrderViewList.size()==0){
+            message = "주문할 상품을 선택해 주세요.";
+            return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST) ;
+        }
+
+        String email = principal.getName() ;
+
+        for(CartOrderView bean : cartOrderViewList ){
+            boolean bool = cs.validateCartProduct(bean.getCartProductId(), email);
+            if(bool == false){
+                message = "주문 권한이 없습니다.";
+                return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST) ;
+            }
+        }
+
+        // 주문 로직을 호출하고, 주문 아이디를 반환 받습니다.
+        Long orderId = cs.orderCartProduct(cartOrderViewList, email);
+
+        // 생성된 주문 번호와 함께 HTTP 응답 코드를 반환해 줍니다.
+        return new ResponseEntity<Long>(orderId, HttpStatus.OK) ;
+
+    }
+
+    // 장바구니 품목들 중 몇 개 주문 하기 끝
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

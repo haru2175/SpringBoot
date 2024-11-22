@@ -9,7 +9,9 @@ import com.shopping.repository.CartRepository;
 import com.shopping.repository.MemberRepository;
 import com.shopping.repository.ProductRepository;
 import com.shopping.view.CartDetailView;
+import com.shopping.view.CartOrderView;
 import com.shopping.view.CartProductView;
+import com.shopping.view.OrderView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,4 +124,40 @@ public class CartService {
         cpr.delete(cartProduct);
     }
     // 장바구니 목록 조회 페이지에서 상품 삭제 끝
+
+    // 장바구니 품목들 중 몇개 주문하기 시작
+    private final OrderService os ;
+
+    public Long orderCartProduct(List<CartOrderView> cartOrderViewList, String email){
+        // orderViewList : 이번에 주문할 항목들이 들어 있는 컬렉션입니다.
+        List<OrderView> orderViewList = new ArrayList<>() ;
+
+        for(CartOrderView cov : cartOrderViewList){
+            Long productId = cov.getCartProductId() ;
+            CartProduct cartProduct = cpr.findById(productId).orElseThrow(EntityNotFoundException::new) ;
+
+            OrderView ov = new OrderView();
+
+            ov.setProductId(cartProduct.getProduct().getId());
+            ov.setCount(cartProduct.getCount());
+
+            orderViewList.add(ov);
+        }
+
+        // 이메일과 장바구니에서 선택한 품목들을 이용하여 주문 로직을 호출합니다.
+        Long orderId = os.orderInCartList(orderViewList, email) ;
+
+        // 주문된 항목들은 장바구니 목록에서 삭제되어야 합니다.
+        for(CartOrderView cov : cartOrderViewList){
+            Long productId = cov.getCartProductId();
+            CartProduct cartProduct = cpr.findById(productId).orElseThrow(EntityNotFoundException::new);
+
+            cpr.delete(cartProduct);
+        }
+
+        return orderId;
+    }
+    // 장바구니 품목들 중 몇개 주문하기 끝
+
+
 }

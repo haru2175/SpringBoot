@@ -129,6 +129,66 @@
                     },
                 });
             }
+
+            /* ajax를 사용하여 장바구니 목록에 대하여 주문 작업을 수행합니다. */
+            function orders(){
+
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+
+                var myurl = '/cart/orders' ;
+
+                var checkList = $('input[name=productCheckBox]:checked') ;
+                if(checkList.length==0){
+                    alert('주문할 상품은 최소 1개 이상 선택되어야 합니다.');
+                    return ;
+                }
+
+                // 선택된 항목들에 대하여 배열 요소에 추가합니다.
+                var productArray = new Array() ; /* 상품들을 담을 배열 */
+
+                checkList.each(function(){
+                    var productId = $(this).val();
+                    var product = new Object(); /* 상품 1개를 의미하는 객체 생성 */
+                    product['cartProductId'] = productId;
+                    productArray.push(product) ; /* 상품 배열에 요소 추가 */
+                });
+
+                var paramData = new Object() ; /* 파라미터로 전송할 객체 */
+                paramData['cartOrderViewList'] = productArray ;
+
+                var param = JSON.stringify(paramData) ;
+                console.log('파라미터 정보');
+                console.log(param);
+
+                $.ajax({
+                    url:myurl,
+                    type:'POST',
+                    contentType:'application/json',
+                    data:param,
+                    beforeSend:function(xhr){
+                        //console.log(header + '/' + token);
+                        //xhr.setRequestHeader(header, token);
+                    },
+                    dataType:'json',
+                    cache:false,
+                    success:function(result, status){
+                        alert('장바구니 품목에 대하여 주문이 완료 되었습니다.');
+                        location.href = '/orders' ;
+                    },
+                    error:function(xhr, status, error){
+                        console.log('오류가 발생하였습니다.');
+                        console.log('xhr.responseText : ' + xhr.responseText);
+                        console.log('status : ' + status);
+                        console.log('error : ' + error);
+
+                        if(xhr.status=='401'){
+                            alert('로그인 이후에 이용해 주세요.');
+                            location.href = '/member/login' ;
+                        }
+                    },
+                });
+            }
         </script>
     </th:block>
 
@@ -236,7 +296,7 @@
             </h2>
 
             <h2 class="text-center">
-                <button type="button"
+                <button type="button" onclick="orders();"
                         class="btn btn-primary btn-lg">
                     주문하기
                 </button>
