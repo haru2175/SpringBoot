@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{common/mylayout}">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- 사용자 스크립트 추가 -->
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            $(document).ready(function(){
+                /* 최초 시작시 0페이지로 이동 */
+                /* 검색 버튼과 클릭 이벤트 연동 */
+                $('#searchBtn').on('click', function(e){
+                    e.preventDefault();
+                    gotoPage(0);
+                });
+            });
+
+            function gotoPage(page){
+                var searchDateType = $('#searchDateType').val();
+                var productStatus = $('#productStatus').val();
+                var category = $('#category').val();
+                var searchMode = $('#searchMode').val();
+                var searchKeyword = $('#searchKeyword').val();
+
+                var base_url = '/admin/product/list/' + page + '?' ;
+                var parameters = '' ;
+                parameters += '&searchDateType=' + searchDateType ;
+                parameters += '&productStatus=' + productStatus ;
+                parameters += '&category=' + category ;
+                parameters += '&searchMode=' + searchMode ;
+                parameters += '&searchKeyword=' + searchKeyword ;
+
+                var url = base_url + parameters ;
+                location.href = url ;
+            }
+        </script>
+    </th:block>
+
+    <th:block layout:fragment="css">
+        <style>
+            .pagingStatus{fontSize:10px;}
+            .inner-div {
+                color: white; /* 글자 색상 */
+                padding: 20px; /* 패딩 */
+                margin-left: -35px; /* 마진 */
+                text-align: center; /* 텍스트 중앙 정렬 */
+            }
+        </style>
+    </th:block>
+
+    <div class="content" layout:fragment="content">
+        <span class="h2">상품 목록 페이지</span>
+        <span class="pagingStatus" th:text="${totalCount}"></span>
+        <br/>
+        <form role="form" method="get" th:object="${products}">
+            <!-- 표 형태의 데이터 목록 -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>상품 아이디</th>
+                    <th>상품명</th>
+                    <th>상태</th>
+                    <th>카테고리</th>
+                    <th>등록자</th>
+                    <th>등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bean, status : ${products.getContent()}">
+                    <td th:text="${bean.id}"></td>
+                    <td>
+                        <a th:href="'/admin/product/update/'+${bean.id}" th:text="${bean.name}"></a>
+                    </td>
+
+                    <!-- Thymeleaf에서 Enum 타입 코딩을 할때 == 연산자 보다는 eq 연산자 사용을 권장합니다. -->
+                    <td th:text="${bean.productStatus.getStatus()}"></td>
+                    <td th:text="${bean.category.getKorean()}"></td>
+                    <td th:text="${bean.createdBy}"></td>
+                    <td th:text="${bean.regDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이지 네이션  -->
+            <div th:with="beginPage=${(products.number/pageCount)*pageCount + 1}, endPage=(${(products.totalPages == 0) ? 1 : (beginPage + (pageCount - 1) < products.totalPages ? beginPage + (pageCount - 1) : products.totalPages)})" >
+                <ul class="pagination justify-content-center">
+                    <span th:text="${products.number}"></span>---
+                    <span th:text="${pageCount}"></span>
+                    <li class="page-item" th:classappend="${products.number < pageCount}?'disabled'">
+                        <a th:onclick="'javascript:gotoPage(' + ${beginPage} + ')'" aria-label='Previous' class="page-link">
+                            <span aria-hidden='true'>Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="currentPage: ${#numbers.sequence(beginPage, endPage)}" th:classappend="${products.number eq currentPage-1}?'active':''">
+                        <a th:onclick="'javascript:gotoPage(' + ${currentPage - 1} + ')'" th:inline="text" class="page-link">[[${currentPage}]]</a>
+                    </li>
+                    <li class="page-item" th:classappend="${products.last}?'disabled'">
+                        <a th:onclick="'javascript:gotoPage(' + ${endPage} + ')'" aria-label='Next' class="page-link">
+                            <span aria-hidden='true'>Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- /* 필드 검색 */ -->
+            <div class="d-flex justify-content-center" th:object="${searchView}">
+                <div class="inner-div">
+                    <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
+                        <option value="all">전체 기간</option>
+                        <option value="1d">1일</option>
+                        <option value="1w">1주</option>
+                        <option value="1m">1달</option>
+                        <option value="6m">6달</option>
+                    </select>
+                </div>
+                <div class="inner-div">
+                    <select th:field="*{productStatus}" class="form-control" style="width:auto;">
+                        <option th:each="prstatus : ${T(com.shopping.constant.ProductStatus).values()}"
+                                th:value="${prstatus}" th:text="${prstatus.getStatus()}"></option>
+                    </select>
+                </div>
+                <div class="inner-div">
+                    <select th:field="*{category}" class="form-control" style="width:auto;">
+                        <option th:each="cat : ${T(com.shopping.constant.Category).values()}"
+                                th:value="${cat}" th:text="${cat.getKorean()}"></option>
+                    </select>
+                </div>
+                <div class="inner-div">
+                    <select th:field="*{searchMode}" class="form-control" style="width:auto;">
+                        <option value="NULL">선택하기</option>
+                        <option value="name">상품명</option>
+                        <option value="createdBy">등록자</option>
+                    </select>
+                </div>
+                <div class="inner-div">
+                    <input th:field="*{searchKeyword}" class="form-control" type="text" placeholder="검색어를 입력해 주세요.">
+                </div>
+                <div class="inner-div">
+                    <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</html>

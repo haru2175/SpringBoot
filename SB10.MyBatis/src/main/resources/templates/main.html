@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/mylayout}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .row{margin-top:10px;}
+        .banner-image{width:100%;height:auto;}
+        a{text-decoration:none;}
+    </style>
+</th:block>
+
+<div class="content" layout:fragment="content">
+    <div class="banner-container">
+        <img class="banner-image" src="/shop/image/main_image3.jpg" alt="Main image">
+    </div>
+
+    <input type="hidden" name="searchKeyword" th:value="${searchView.searchKeyword}">
+
+    <div th:if="${not #strings.isEmpty(searchView.searchKeyword)}" class="center">
+        <p class="h3 font-weight-bold" th:text="${searchView.searchKeyword} + '검색 결과'"></p>
+    </div>
+
+    <div class="row">
+        <th:block th:each="bean, status: ${products.getContent()}">
+            <div class="col-md-4 margin">
+                <div class="card">
+                    <a th:href="'/product/detail/' + ${bean.id}" class="text-dark">
+                        <!--<span th:text="${bean.imageUrl}"></span>-->
+                        <img th:src="${bean.image01}" class="rounded card-img-top" th:alt="${bean.name}" height="300" width="300">
+                        <div class="card-body">
+                            <h4 class="card-title">[[${bean.name}]]</h4>
+
+                            <!-- 글자 길이가 40글자 이상인 경우 -->
+                            <div th:if="${#strings.length(bean.description) &gt;= 40}">
+                                <p class="card-text">
+                                    [[${#strings.substring(bean.description, 0, 40)+'...'}]]
+                                </p>
+                            </div>
+
+                            <!-- 글자 길이가 80글자 미만인 경우 -->
+                            <div th:unless="${#strings.length(bean.description) &gt;= 40}">
+                                <p class="card-text">[[${bean.description}]]</p>
+                            </div>
+
+                            <h3 class="card-title text-danger">
+                                <span th:text="${#numbers.formatInteger(bean.price, 0, 'COMMA')}" /> 원
+                            </h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+    <br/>
+    <div th:with="start=${(products.number/pageCount)*pageCount + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (pageCount - 1) < products.totalPages ? start + (pageCount - 1) : products.totalPages)})" >
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item" th:classappend="${products.number eq 0}?'disabled':''">
+                <a th:href="@{'/' + '?searchKeyword=' + ${searchView.searchKeyword} + '&page=' + ${products.number-1}}" aria-label='Previous' class="page-link">
+                    <span aria-hidden='true'>Previous</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number eq page-1}?'active':''">
+                <a th:href="@{'/' +'?searchKeyword=' + ${searchView.searchKeyword} + '&page=' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+            </li>
+
+            <li class="page-item" th:classappend="${products.number+1 ge products.totalPages}?'disabled':''">
+                <a th:href="@{'/' +'?searchKeyword=' + ${searchView.searchKeyword} + '&page=' + ${products.number+1}}" aria-label='Next' class="page-link">
+                    <span aria-hidden='true'>Next</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+          return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
+</div>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/mylayout}">
+
+<div class="content" layout:fragment="content">
+    <h3>게시물 목록</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>글번호</th>
+            <th>작성자</th>
+            <th>글제목</th>
+            <th>글내용</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bean : ${list}">
+            <td th:text="${bean.no}"></td>
+            <td>
+                <a th:href="'/board/detail/'+${bean.no}"  th:text="${bean.writer}"></a>
+            </td>
+            <td th:text="${bean.subject}"></td>
+            <td th:text="${bean.description}"></td>
+            <td>
+                <a th:href="'/board/update/'+${bean.no}" th:text="수정"></a>
+            </td>
+            <td>
+                <a th:href="'/board/delete/'+${bean.no}" th:text="삭제"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <a th:href="@{/board/insert}">
+        <button type="button" class="btn btn-primary" >등록하기</button>
+    </a>
+</div>
+</html>

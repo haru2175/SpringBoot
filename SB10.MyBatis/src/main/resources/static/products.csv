@@ -1,0 +1,48 @@
+product_id,reg_date,created_by,category,name,product_status,image01,image02,image03,stock,price,description
+1,1990-12-22,ADMIN,BEVERAGE,레드 와인 01,SELL,/images/image/redwine01.png,,,100,6000,레드 와인은 붉은 포도에서 만들어지며 화이트 와인은 흰 포도에서 만들어집니다. 각각의 와인은 다양한 향과 맛을 가지고 있으며 음식과의 궁합을 즐길 수 있습니다.
+2,1980-07-26,ADMIN,BEVERAGE,레드 와인 02,SELL,/images/image/redwine02.png,,,100,5000,레드 와인은 붉은 포도에서 만들어지며 화이트 와인은 흰 포도에서 만들어집니다. 각각의 와인은 다양한 향과 맛을 가지고 있으며 음식과의 궁합을 즐길 수 있습니다.
+3,1990-12-22,ADMIN,MACARON,마카롱 01,SELL,/images/image/macaron01.png,,,100,5000,마카롱은 부드럽고 쫀득한 식감의 머랭으로 만든 쿠키로 색상과 맛이 다양하게 제공되며 중간에 크림이나 젤리 등을 채워 먹습니다. 프랑스에서 온 디저트로 유명합니다.
+4,1995-05-04,ADMIN,BEVERAGE,바닐라 라떼 01,SELL,/images/image/vanilla_latte_01.png,/images/image/vanilla_latte_02.png,,100,3000,바닐라라떼는 에스프레소에 스팀밀크와 바닐라 시럽을 추가한 커피 음료로 달콤하고 부드러운 맛이 특징입니다.
+5,2023-08-15,ADMIN,BEVERAGE,바닐라 라떼 02,SELL,/images/image/vanilla_latte_02.png,,,100,6000,바닐라라떼는 에스프레소에 스팀밀크와 바닐라 시럽을 추가한 커피 음료로 달콤하고 부드러운 맛이 특징입니다.
+6,2023-08-15,ADMIN,BREAD,치아바타07,SOLD_OUT,/images/image/ciabatta_07.png,,,100,3000,치아바타는 이탈리아에서 유래한 빵으로 폭이 넓고 길게 늘어진 모양과 부드러운 내면이 특징입니다. 외부는 바삭하고 내면은 쫀득하게 구워집니다.
+7,1980-07-26,ADMIN,BEVERAGE,카푸치노01,SOLD_OUT,/images/image/cappuccino01.png,,,100,6000,카푸치노는 에스프레소 스팀밀크 그리고 마끼아토(폼으로 된 우유)의 조합으로 만들어진 이탈리아의 전통 음료입니다. 에스프레소와 부드러운 우유 거품이 적절하게 섞여 부드럽고 부드러운 맛을 제공합니다.
+8,1980-07-17,ADMIN,BEVERAGE,바닐라 라떼 03,SELL,/images/image/vanilla_latte_03.png,,,100,5000,바닐라라떼는 에스프레소에 스팀밀크와 바닐라 시럽을 추가한 커피 음료로 달콤하고 부드러운 맛이 특징입니다.
+9,1995-05-04,ADMIN,BREAD,브리오슈01,SELL,/images/image/brioche_01.png,/images/image/brioche_02.png,/images/image/brioche_05.png,100,3000,브리오슈는 프랑스에서 유래한 부드럽고 달콤한 빵으로 풍부한 양의 버터와 계란이 사용되어 부드러운 식감과 풍미를 제공합니다.
+10,2023-08-15,ADMIN,BREAD,크로와상05,SOLD_OUT,/images/image/croissant_05.png,,,100,4000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+11,1980-07-17,ADMIN,BREAD,크로와상06,SOLD_OUT,/images/image/croissant_06.png,/images/image/croissant_08.png,/images/image/croissant_02.png,100,3000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+12,1990-12-22,ADMIN,BREAD,크로와상07,SOLD_OUT,/images/image/croissant_07.png,,,100,6000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+13,1980-07-17,ADMIN,BREAD,크로와상08,SOLD_OUT,/images/image/croissant_08.png,,,100,5000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+14,2023-08-15,ADMIN,BREAD,브리오슈02,SELL,/images/image/brioche_02.png,,,100,6000,브리오슈는 프랑스에서 유래한 부드럽고 달콤한 빵으로 풍부한 양의 버터와 계란이 사용되어 부드러운 식감과 풍미를 제공합니다.
+15,1980-07-17,ADMIN,BREAD,브리오슈03,SELL,/images/image/brioche_03.png,,,100,5000,브리오슈는 프랑스에서 유래한 부드럽고 달콤한 빵으로 풍부한 양의 버터와 계란이 사용되어 부드러운 식감과 풍미를 제공합니다.
+16,2023-06-02,ADMIN,CAKE,스폰지 케익 01,SELL,/images/image/sponge_cake_01.png,,,100,4000,스폰지 케익은 부드럽고 가벼운 텍스처를 가지는 케이크로 계란 설탕 밀가루를 주 재료로 사용하여 만듭니다.
+17,1990-12-22,ADMIN,BEVERAGE,아메리카노01,SELL,/images/image/americano01.png,/images/image/americano02.png,/images/image/americano03.png,100,6000,아메리카노는 에스프레소에 물을 추가한 음료로 강렬한 향과 맛을 가지고 있습니다. 에스프레소의 양과 물의 비율에 따라 진하거나 가벼운 맛을 즐길 수 있습니다.
+18,1980-07-26,ADMIN,BEVERAGE,아메리카노02,SELL,/images/image/americano02.png,,,100,5000,아메리카노는 에스프레소에 물을 추가한 음료로 강렬한 향과 맛을 가지고 있습니다. 에스프레소의 양과 물의 비율에 따라 진하거나 가벼운 맛을 즐길 수 있습니다.
+19,2023-06-02,ADMIN,BEVERAGE,아메리카노03,SELL,/images/image/americano03.png,,,100,4000,아메리카노는 에스프레소에 물을 추가한 음료로 강렬한 향과 맛을 가지고 있습니다. 에스프레소의 양과 물의 비율에 따라 진하거나 가벼운 맛을 즐길 수 있습니다.
+20,1990-12-22,ADMIN,BEVERAGE,에스포레소01,SELL,/images/image/eseupeuleso_01.png,,,100,4000,에스프레소는 고농축 커피 음료로 강력한 향과 맛이 특징입니다. 작은 양의 뜨거운 물을 높은 압력으로 커피 찌꺼기를 통과시켜 추출합니다.
+21,1990-12-22,ADMIN,BEVERAGE,에스포레소02,SELL,/images/image/eseupeuleso_02.png,,,100,3000,에스프레소는 고농축 커피 음료로 강력한 향과 맛이 특징입니다. 작은 양의 뜨거운 물을 높은 압력으로 커피 찌꺼기를 통과시켜 추출합니다.
+22,1980-07-17,ADMIN,BEVERAGE,우유 01,SELL,/images/image/milk01.jpg,,,100,4000,에스프레소는 고농축 커피 음료로 강력한 향과 맛이 특징입니다. 작은 양의 뜨거운 물을 높은 압력으로 커피 찌꺼기를 통과시켜 추출합니다.
+23,1990-12-22,ADMIN,BEVERAGE,우유 02,SELL,/images/image/milk02.jpg,,,100,3000,우유는 동물의 유방에서 나오는 유액으로 다양한 종류가 있습니다. 농축유 식물성 우유 등이 있으며 커피 음료나 요리에 사용됩니다.
+24,2023-08-15,ADMIN,BEVERAGE,쥬스01,SELL,/images/image/juice01.png,,,100,3000,우유는 동물의 유방에서 나오는 유액으로 다양한 종류가 있습니다. 농축유 식물성 우유 등이 있으며 커피 음료나 요리에 사용됩니다.
+25,1980-07-17,ADMIN,BEVERAGE,쥬스02,SELL,/images/image/juice02.png,,,100,6000,쥬스는 과일이나 채소를 갈아서 추출한 음료를 말합니다. 오렌지 주스 사과 주스 포도 주스 등 다양한 종류가 있으며 신선하고 천연적인 맛이 특징입니다.
+26,2023-08-15,GOMDORI,CAKE,초콜릿 케익,SOLD_OUT,/images/image/chocolate_cake_01.png,,,100,6000,쥬스는 과일이나 채소를 갈아서 추출한 음료를 말합니다. 오렌지 주스 사과 주스 포도 주스 등 다양한 종류가 있으며 신선하고 천연적인 맛이 특징입니다.
+27,1980-07-17,GOMDORI,BREAD,치아바타01,SOLD_OUT,/images/image/ciabatta_01.png,/images/image/ciabatta_06.png,/images/image/ciabatta_07.png,100,5000,초콜릿 케익은 주로 초콜릿을 주 재료로 사용하여 만든 달콤하고 부드러운 케이크로 다양한 형태와 스타일이 존재합니다.
+28,1990-12-22,GOMDORI,BREAD,치아바타02,SOLD_OUT,/images/image/ciabatta_02.png,,,100,4000,치아바타는 이탈리아에서 유래한 빵으로 폭이 넓고 길게 늘어진 모양과 부드러운 내면이 특징입니다. 외부는 바삭하고 내면은 쫀득하게 구워집니다.
+29,1990-12-22,GOMDORI,BREAD,치아바타03,SOLD_OUT,/images/image/ciabatta_03.png,,,100,3000,치아바타는 이탈리아에서 유래한 빵으로 폭이 넓고 길게 늘어진 모양과 부드러운 내면이 특징입니다. 외부는 바삭하고 내면은 쫀득하게 구워집니다.
+30,1980-07-26,GOMDORI,BREAD,치아바타04,SOLD_OUT,/images/image/ciabatta_04.png,,,100,6000,치아바타는 이탈리아에서 유래한 빵으로 폭이 넓고 길게 늘어진 모양과 부드러운 내면이 특징입니다. 외부는 바삭하고 내면은 쫀득하게 구워집니다.
+31,1990-12-22,GOMDORI,BREAD,브리오슈04,SELL,/images/image/brioche_04.png,,,100,4000,브리오슈는 프랑스에서 유래한 부드럽고 달콤한 빵으로 풍부한 양의 버터와 계란이 사용되어 부드러운 식감과 풍미를 제공합니다.
+32,1990-12-22,GOMDORI,BREAD,브리오슈05,SELL,/images/image/brioche_05.png,,,100,3000,브리오슈는 프랑스에서 유래한 부드럽고 달콤한 빵으로 풍부한 양의 버터와 계란이 사용되어 부드러운 식감과 풍미를 제공합니다.
+33,2023-06-02,GOMDORI,BREAD,치아바타05,SELL,/images/image/ciabatta_05.png,,,100,5000,치아바타는 이탈리아에서 유래한 빵으로 폭이 넓고 길게 늘어진 모양과 부드러운 내면이 특징입니다. 외부는 바삭하고 내면은 쫀득하게 구워집니다.
+34,1995-05-04,GOMDORI,BREAD,치아바타06,SELL,/images/image/ciabatta_06.png,,,100,4000,치아바타는 이탈리아에서 유래한 빵으로 폭이 넓고 길게 늘어진 모양과 부드러운 내면이 특징입니다. 외부는 바삭하고 내면은 쫀득하게 구워집니다.
+35,2023-06-02,GOMDORI,BEVERAGE,카푸치노02,SELL,/images/image/cappuccino02.png,,,100,5000,카푸치노는 에스프레소 스팀밀크 그리고 마끼아토(폼으로 된 우유)의 조합으로 만들어진 이탈리아의 전통 음료입니다. 에스프레소와 부드러운 우유 거품이 적절하게 섞여 부드럽고 부드러운 맛을 제공합니다.
+36,1995-05-04,GOMDORI,BEVERAGE,카푸치노03,SELL,/images/image/cappuccino03.png,,,100,4000,카푸치노는 에스프레소 스팀밀크 그리고 마끼아토(폼으로 된 우유)의 조합으로 만들어진 이탈리아의 전통 음료입니다. 에스프레소와 부드러운 우유 거품이 적절하게 섞여 부드럽고 부드러운 맛을 제공합니다.
+37,1980-07-17,GOMDORI,BEVERAGE,커피01,SELL,/images/image/coffee01.png,,,100,6000,"커피는 주로 아라비카(Arabica)와 로부스타(Robusta) 두 가지 주요 원두 종류로 나뉩니다. 아라비카는 미세하고 부드러운 풍미를 가지며, 로부스타는 진한 맛과 강렬한 향을 가지고 있습니다."
+38,1990-12-22,GOMDORI,BEVERAGE,커피02,SELL,/images/image/coffee02.jpg,,,100,5000,"커피는 주로 아라비카(Arabica)와 로부스타(Robusta) 두 가지 주요 원두 종류로 나뉩니다. 아라비카는 미세하고 부드러운 풍미를 가지며, 로부스타는 진한 맛과 강렬한 향을 가지고 있습니다."
+39,1990-12-22,GOMDORI,BREAD,크로와상01,SELL,/images/image/croissant_01.png,/images/image/croissant_02.png,/images/image/croissant_03.png,100,4000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+40,1980-07-26,GOMDORI,BREAD,크로와상02,SELL,/images/image/croissant_02.png,,,100,3000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+41,2023-06-02,GOMDORI,BREAD,크로와상03,SELL,/images/image/croissant_03.png,,,100,6000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+42,1995-05-04,GOMDORI,BREAD,크로와상04,SELL,/images/image/croissant_04.png,,,100,5000,프랑스의 전통적인 빵으로 반죽에 여러 번 버터를 넣어 만든 빵입니다. 층층이 된 구조로 바삭하면서 부드러운 맛을 가지고 있습니다.
+43,1980-07-26,GOMDORI,BREAD,프렌치 바게트 01,SELL,/images/image/french_baguette_01.png   ,/images/image/french_baguette_02.png,/images/image/french_baguette_03.png,100,6000,프렌치 바게트는 길고 얇게 구운 프랑스의 대표적인 빵으로 바삭한 외피와 부드러운 내면이 특징입니다.
+44,2023-06-02,GOMDORI,BREAD,프렌치 바게트 02,SELL,/images/image/french_baguette_02.png,,,100,5000,프렌치 바게트는 길고 얇게 구운 프랑스의 대표적인 빵으로 바삭한 외피와 부드러운 내면이 특징입니다.
+45,1995-05-04,GOMDORI,BREAD,프렌치 바게트 03,SELL,/images/image/french_baguette_03.png,,,100,4000,프렌치 바게트는 길고 얇게 구운 프랑스의 대표적인 빵으로 바삭한 외피와 부드러운 내면이 특징입니다.
+46,1990-12-22,GOMDORI,BEVERAGE,화이트 와인 01,SOLD_OUT,/images/image/whitewine01.png,/images/image/whitewine02.png,,100,4000,레드 와인은 붉은 포도에서 만들어지며 화이트 와인은 흰 포도에서 만들어집니다. 각각의 와인은 다양한 향과 맛을 가지고 있으며 음식과의 궁합을 즐길 수 있습니다.
+47,1980-07-17,GOMDORI,BEVERAGE,화이트 와인 02,SELL,/images/image/whitewine02.png,,,100,3000,레드 와인은 붉은 포도에서 만들어지며 화이트 와인은 흰 포도에서 만들어집니다. 각각의 와인은 다양한 향과 맛을 가지고 있으며 음식과의 궁합을 즐길 수 있습니다.

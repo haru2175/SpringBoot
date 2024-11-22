@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/mylayout}">
+
+<div class="content" layout:fragment="content">
+    <table class="table">
+        <tr>
+            <td>글번호</td>
+            <td th:text="${board.no}"></td>
+        </tr>
+        <tr>
+            <td>작성자</td>
+            <td th:text="${board.writer}"></td>
+        </tr>
+        <tr>
+            <td>글제목</td>
+            <td th:text="${board.subject}"></td>
+        </tr>
+        <tr>
+            <td>글내용</td>
+            <td th:text="${board.description}"></td>
+        </tr>
+    </table>
+    <hr/>
+    <a th:href="'/board/list'">
+        <button type="button" class="btn btn-primary">돌아 가기</button>
+    </a>
+</div>
+</html>
