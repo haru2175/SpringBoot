@@ -12,10 +12,11 @@
         <option value="$PROJECT_DIR$/SB04.Thymeleaf/pom.xml" />
         <option value="$PROJECT_DIR$/SB00.lnitalizer/pom.xml" />
         <option value="$PROJECT_DIR$/SB06.Association_Mapping/pom.xml" />
+        <option value="$PROJECT_DIR$/SB10.MyBatis/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="openjdk-22" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_12" default="true" project-jdk-name="12" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

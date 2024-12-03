@@ -34,6 +34,9 @@ public class SecurityConfig { // 시큐리티를 위한 설정 파일
     @Bean // 인증, 인가, 로그인 등의 처리를 할 예정입니다.
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         http.csrf().disable(); // CSRF 기능 비활성화
+        
+        http.cors() ; // CORS 허용
+
         http
             .formLogin() // 폼 기반 로그인 설정
             .loginPage("/member/login") // 커스텀 로그인 페이지 설정
@@ -50,7 +53,7 @@ public class SecurityConfig { // 시큐리티를 위한 설정 파일
 
         // 인가(Authorization) 설정
         http.authorizeRequests()
-            .mvcMatchers("/", "/member/**", "/product/**", "/images/**", "/thymeleaf/**").permitAll()
+            .mvcMatchers("/", "/member/**", "/product/**", "/images/**", "/thymeleaf/**", "/react/**").permitAll()
             .mvcMatchers("/admin/**", "/admin/product/**").hasRole("ADMIN")
             .anyRequest().authenticated() ;
 
